@@ -23,7 +23,7 @@
 
 		<version.javaee>7.0</version.javaee>
 		
-		<version.jetty-maven-plugin>9.3.0.v20150612</version.jetty-maven-plugin>
+		<version.wildfly-maven-plugin>1.1.0.Alpha5</version.wildfly-maven-plugin>
 
 	</properties>
 
@@ -48,10 +48,18 @@
 		<plugins>
 
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${version.jetty-maven-plugin}</version>
-			</plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly-maven-plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
 		</plugins>
 
