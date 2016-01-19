@@ -1,34 +1,60 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-	
+
+
+	<!-- Carte de visite de notre module Maven. -->
 	<groupId>fr.snekkja.cours</groupId>
 	<artifactId>jsf2</artifactId>
 	<version>0.1-SNAPSHOT</version>
-	
+
 	<packaging>war</packaging>
-	
+
 	<name>Cours JSF2</name>
-	
-	
+
+
+	<!-- Variables centralisées en un point, augmentant la lisibilité et la 
+		maintenabilité. Se trouve généralement sous cette section : - Les numéros 
+		de versions des librairies tierces. - Les numéros de versions des plugins 
+		Maven. - Les propriétés des plugins maven (verbosité du debug, répertoire 
+		de livraison ,etc...). - Les propriétés des différents environnements cibles 
+		de build (URL des serveurs de dev, intégration continue, etc...). -->
 	<properties>
-	
+
 		<version.javaee>7.0</version.javaee>
-	
+		
+		<version.jetty-maven-plugin>9.3.0.v20150612</version.jetty-maven-plugin>
+
 	</properties>
-	
-	
+
+
+	<!-- Déclaration des librairies tierces utilisées dans le projet. -->
 	<dependencies>
-	
+
 		<!-- API Java EE -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>${version.javaee}</version>
+			<scope>provided</scope>
 		</dependency>
-		
+
 	</dependencies>
-	
-	
+
+
+	<!-- Parametrage du cycle de build de ce module. -->
+	<build>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${version.jetty-maven-plugin}</version>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
 </project>
