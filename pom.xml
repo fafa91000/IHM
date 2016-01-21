@@ -19,7 +19,7 @@
 		
 		<version.wildfly-maven-plugin>1.1.0.Alpha5</version.wildfly-maven-plugin>
 		<version.maven-compiler-plugin>3.3</version.maven-compiler-plugin>
-
+		<version.maven-war-plugin>2.6</version.maven-war-plugin>
 
 	</properties>
 
@@ -57,10 +57,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
+				<version>${version.maven-war-plugin}</version>
 			</plugin>
 
-			<!-- Plugin Jetty -->
+			<!-- Plugin wildfly -->
 			<plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
