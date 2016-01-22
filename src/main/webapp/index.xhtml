@@ -19,13 +19,18 @@
 			<fieldset>
 				<legend>Sélectionnez votre boisson</legend>
 			
-				<h:selectOneRadio value="#{commandeForm.nomBoissonSelectionnee}" required="true" layout="pageDirection">
-					<f:selectItems value="#{commandeForm.boissonsDisponibles}" var="boissonDisponible" itemValue="#{boissonDisponible.nom}" itemLabel="#{boissonDisponible.nom} - #{boissonDisponible.prix}€" />
+				<h:selectOneRadio value="#{commandeForm.boissonSelectionnee}" converter="#{boissonConverter}" layout="pageDirection">
+					<f:selectItems value="#{commandeForm.boissonsDisponibles}" var="boissonDisponible" itemValue="#{boissonDisponible}" itemLabel="#{boissonDisponible.nom} - #{boissonDisponible.prix}€" />
 				</h:selectOneRadio>
+			</fieldset>
+			
+			<fieldset>
+				<legend>Faîtes l'appoint</legend>
 				
+				<h:inputText value="#{commandeForm.sommePayee}" />
 			</fieldset>
 						 
-			<h:commandButton value="OK" action="commande" />
+			<h:commandButton value="Commander" action="#{commandeForm.commander}" />
 			
 		</h:form>
 		

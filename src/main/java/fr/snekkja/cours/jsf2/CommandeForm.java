@@ -3,9 +3,11 @@ package fr.snekkja.cours.jsf2;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 import fr.snekkja.cours.jsf2.domain.Boisson;
 import fr.snekkja.cours.jsf2.service.BoissonService;
@@ -25,11 +27,14 @@ public class CommandeForm implements Serializable
 	private static final long	serialVersionUID	= 1;
 	
 	/** Service de gestion des boissons */
-	@EJB
+	@Inject
 	private BoissonService m_boissonService;
 	
-	/** Nom de la boisson sélectionnée */
-	private String m_nomBoissonSelectionnee;
+	/** Boisson sélectionnée */
+	private Boisson m_boissonSelectionnee;
+	
+	/** Somme payée par l'utilisateur */
+	private Double m_sommePayee;
 	
 	/**
 	 * Construire un formulaire de commande.
@@ -39,21 +44,21 @@ public class CommandeForm implements Serializable
 	}
 
 	/**
-	 * Obtenir le nom de la boisson selectionnée.
-	 * @return Le nom de la boisson selectionnée.
+	 * Obtenir la boisson selectionnée.
+	 * @return La boisson selectionnée.
 	 */
-	public String getNomBoissonSelectionnee()
+	public Boisson getBoissonSelectionnee()
 	{
-		return m_nomBoissonSelectionnee;
+		return m_boissonSelectionnee;
 	}
 
 	/**
-	 * Peupler le nom de la boisson sélectionnée.
-	 * @param nomBoisson Un nom de boisson.
+	 * Peupler la boisson sélectionnée.
+	 * @param nomBoisson Une boisson.
 	 */
-	public void setNomBoissonSelectionnee(final String nomBoisson)
+	public void setBoissonSelectionnee(final Boisson nomBoisson)
 	{
-		this.m_nomBoissonSelectionnee = nomBoisson;
+		this.m_boissonSelectionnee = nomBoisson;
 	}
 
 	/**
@@ -63,6 +68,44 @@ public class CommandeForm implements Serializable
 	public List<Boisson> getBoissonsDisponibles()
 	{
 		return m_boissonService.obtenirBoissonsDisponibles();
+	}
+
+	/**
+	 * Obtenir la somme payée par l'utilisateur.
+	 * 
+	 * @return La somme payée par l'utilisateur.
+	 */
+	public Double getSommePayee()
+	{
+		return m_sommePayee;
+	}
+
+	/**
+	 * Peupler la somme payée par l'utilisateur.
+	 * 
+	 * @param sommePayee Une somme.
+	 */
+	public void setSommePayee(final Double sommePayee)
+	{
+		m_sommePayee = sommePayee;
+	}
+	
+	/**
+	 * Commander une boisson.
+	 * 
+	 * @return La règle de navigation post-commande.
+	 */
+	public String commander()
+	{
+		if (m_sommePayee >= m_boissonSelectionnee.getPrix())
+		{
+			return "commande";
+		}
+		else
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "N'essayez pas de nous arnaquer !", ""));
+			return "index";
+		}
 	}
 	
 }
