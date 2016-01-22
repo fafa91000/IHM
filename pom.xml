@@ -14,7 +14,7 @@
 
 	<properties>
 
-		<version.java>1.7</version.java>
+		<version.java>1.8</version.java>
 		<version.javaee>7.0</version.javaee>
 		
 		<version.wildfly-maven-plugin>1.1.0.Alpha5</version.wildfly-maven-plugin>

@@ -1,12 +1,16 @@
 package fr.snekkja.cours.jsf2;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+
+import fr.snekkja.cours.jsf2.domain.Boisson;
+import fr.snekkja.cours.jsf2.service.BoissonService;
 
 /**
  * Formulaire de commande.
@@ -22,54 +26,86 @@ public class CommandeForm implements Serializable
 	/** Identifiant de version */
 	private static final long	serialVersionUID	= 1;
 	
-	/** Boisson */
-	private String m_boisson;
+	/** Service de gestion des boissons */
+	@Inject
+	private BoissonService m_boissonService;
 	
-	/** Boissons disponibles */
-	private List<String> m_boissonsDisponibles;
+	/** Boisson sélectionnée */
+	private Boisson m_boissonSelectionnee;
+	
+	/** Somme payée par l'utilisateur */
+	private Double m_sommePayee;
 	
 	/**
 	 * Construire un formulaire de commande.
 	 */
 	public CommandeForm() {
-		
-		this.m_boissonsDisponibles = new ArrayList<>(Arrays.asList("café", "thé", "chocolat", "café au lait"));
+		super();
 	}
 
 	/**
-	 * Obtenir La boisson.
-	 * @return La boisson.
+	 * Obtenir la boisson selectionnée.
+	 * @return La boisson selectionnée.
 	 */
-	public String getBoisson()
+	public Boisson getBoissonSelectionnee()
 	{
-		return m_boisson;
+		return m_boissonSelectionnee;
 	}
 
 	/**
-	 * Peupler la boisson.
-	 * @param boisson Une boisson.
+	 * Peupler la boisson sélectionnée.
+	 * @param nomBoisson Une boisson.
 	 */
-	public void setBoisson(final String boisson)
+	public void setBoissonSelectionnee(final Boisson nomBoisson)
 	{
-		this.m_boisson = boisson;
+		this.m_boissonSelectionnee = nomBoisson;
 	}
 
 	/**
 	 * Obtenir les boissons disponibles.
 	 * @return Les boissons disponibles.
 	 */
-	public List<String> getBoissonsDisponibles()
+	public List<Boisson> getBoissonsDisponibles()
 	{
-		return m_boissonsDisponibles;
+		return m_boissonService.obtenirBoissonsDisponibles();
 	}
 
 	/**
-	 * Peupler les boissons disponibles.
-	 * @param boissonsDisponibles Une liste de boissons disponibles.
+	 * Obtenir la somme payée par l'utilisateur.
+	 * 
+	 * @return La somme payée par l'utilisateur.
 	 */
-	public void setBoissonsDisponibles(final List<String> boissonsDisponibles)
+	public Double getSommePayee()
 	{
-		m_boissonsDisponibles = boissonsDisponibles;
+		return m_sommePayee;
+	}
+
+	/**
+	 * Peupler la somme payée par l'utilisateur.
+	 * 
+	 * @param sommePayee Une somme.
+	 */
+	public void setSommePayee(final Double sommePayee)
+	{
+		m_sommePayee = sommePayee;
+	}
+	
+	/**
+	 * Commander une boisson.
+	 * 
+	 * @return La règle de navigation post-commande.
+	 */
+	public String commander()
+	{
+		if (m_sommePayee >= m_boissonSelectionnee.getPrix())
+		{
+			return "commande";
+		}
+		else
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "N'essayez pas de nous arnaquer !", ""));
+			return "index";
+		}
 	}
 	
 }
