@@ -15,8 +15,18 @@
 		<h2>Passez votre commande</h2>
 		
 		<h:form>
-			<h:inputText required="true" value="#{commandeForm.boisson}" label="Boisson" />
+		
+			<fieldset>
+				<legend>Sélectionnez votre boisson</legend>
+			
+				<h:selectOneRadio value="#{commandeForm.boisson}" required="true" layout="pageDirection">
+					<f:selectItems value="#{commandeForm.boissonsDisponibles}" var="boissonDisponible" itemValue="#{boissonDisponible}" />
+				</h:selectOneRadio>
+				
+			</fieldset>
+						 
 			<h:commandButton value="OK" action="commande" />
+			
 		</h:form>
 		
 	</h:body>
