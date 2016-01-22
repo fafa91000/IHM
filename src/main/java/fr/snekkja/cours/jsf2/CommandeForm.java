@@ -1,12 +1,14 @@
 package fr.snekkja.cours.jsf2;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+
+import fr.snekkja.cours.jsf2.domain.Boisson;
+import fr.snekkja.cours.jsf2.service.BoissonService;
 
 /**
  * Formulaire de commande.
@@ -22,54 +24,45 @@ public class CommandeForm implements Serializable
 	/** Identifiant de version */
 	private static final long	serialVersionUID	= 1;
 	
-	/** Boisson */
-	private String m_boisson;
+	/** Service de gestion des boissons */
+	@EJB
+	private BoissonService m_boissonService;
 	
-	/** Boissons disponibles */
-	private List<String> m_boissonsDisponibles;
+	/** Nom de la boisson sélectionnée */
+	private String m_nomBoissonSelectionnee;
 	
 	/**
 	 * Construire un formulaire de commande.
 	 */
 	public CommandeForm() {
-		
-		this.m_boissonsDisponibles = new ArrayList<>(Arrays.asList("café", "thé", "chocolat", "café au lait"));
+		super();
 	}
 
 	/**
-	 * Obtenir La boisson.
-	 * @return La boisson.
+	 * Obtenir le nom de la boisson selectionnée.
+	 * @return Le nom de la boisson selectionnée.
 	 */
-	public String getBoisson()
+	public String getNomBoissonSelectionnee()
 	{
-		return m_boisson;
+		return m_nomBoissonSelectionnee;
 	}
 
 	/**
-	 * Peupler la boisson.
-	 * @param boisson Une boisson.
+	 * Peupler le nom de la boisson sélectionnée.
+	 * @param nomBoisson Un nom de boisson.
 	 */
-	public void setBoisson(final String boisson)
+	public void setNomBoissonSelectionnee(final String nomBoisson)
 	{
-		this.m_boisson = boisson;
+		this.m_nomBoissonSelectionnee = nomBoisson;
 	}
 
 	/**
 	 * Obtenir les boissons disponibles.
 	 * @return Les boissons disponibles.
 	 */
-	public List<String> getBoissonsDisponibles()
+	public List<Boisson> getBoissonsDisponibles()
 	{
-		return m_boissonsDisponibles;
-	}
-
-	/**
-	 * Peupler les boissons disponibles.
-	 * @param boissonsDisponibles Une liste de boissons disponibles.
-	 */
-	public void setBoissonsDisponibles(final List<String> boissonsDisponibles)
-	{
-		m_boissonsDisponibles = boissonsDisponibles;
+		return m_boissonService.obtenirBoissonsDisponibles();
 	}
 	
 }

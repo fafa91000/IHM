@@ -19,8 +19,8 @@
 			<fieldset>
 				<legend>Sélectionnez votre boisson</legend>
 			
-				<h:selectOneRadio value="#{commandeForm.boisson}" required="true" layout="pageDirection">
-					<f:selectItems value="#{commandeForm.boissonsDisponibles}" var="boissonDisponible" itemValue="#{boissonDisponible}" />
+				<h:selectOneRadio value="#{commandeForm.nomBoissonSelectionnee}" required="true" layout="pageDirection">
+					<f:selectItems value="#{commandeForm.boissonsDisponibles}" var="boissonDisponible" itemValue="#{boissonDisponible.nom}" itemLabel="#{boissonDisponible.nom} - #{boissonDisponible.prix}€" />
 				</h:selectOneRadio>
 				
 			</fieldset>
