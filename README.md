@@ -1,2 +1,2 @@
-# JSF2
-Projets, exemples et documentations accompagnant le module "Interfaces en Java avec JSF et Primefaces"
+# IHM
+Projets, exemples et documentations accompagnant le module "IHM en Java avec JSF 2 et Primefaces"
